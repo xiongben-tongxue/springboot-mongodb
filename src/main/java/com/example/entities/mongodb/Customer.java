@@ -1,14 +1,24 @@
 package com.example.entities.mongodb;
 
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 
-
+@Data
 public class Customer {
 
+    /**
+     * 主键ID
+     */
     @Id
-    public String id;
+    public Long id;
 
+    /**
+     * 第一个名字的值
+     */
     public String firstName;
+    /**
+     * 第二个
+     */
     public String lastName;
 
     public Customer() {}
