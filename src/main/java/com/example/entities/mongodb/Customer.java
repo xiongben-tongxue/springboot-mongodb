@@ -10,7 +10,7 @@ public class Customer {
      * 主键ID
      */
     @Id
-    public Long id;
+    public String id;
 
     /**
      * 第一个名字的值

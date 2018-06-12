@@ -5,20 +5,24 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface CustomerRepository extends MongoRepository<Customer, Long> {
+/**
+ * 普通的查询示例
+ */
+public interface CustomerMongoRepository extends MongoRepository<Customer, String> {
 
     /**
      * 根据名字的首字母查询
      * @param firstName
      * @return
      */
-    public Customer findByFirstName(String firstName);
+    List<Customer> findByFirstName(String firstName);
 
     /**
      * 根据名字的最后一个字母查询
      * @param lastName
      * @return
      */
-    public List<Customer> findByLastName(String lastName);
+    List<Customer> findByLastName(String lastName);
 
+    List<Customer> findAllById(String id);
 }

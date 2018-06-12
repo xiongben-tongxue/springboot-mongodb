@@ -26,3 +26,8 @@ hs_err_pid*
 .idea/workspace.xml
 .idea/workspace.xml
 *.xml
+*.lst
+target/mongodb-0.0.1-SNAPSHOT.jar.original
+target/maven-archiver/pom.properties
+target/classes/application.properties
+target/classes/application.properties
