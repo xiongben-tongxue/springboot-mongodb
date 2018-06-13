@@ -7,10 +7,15 @@ import com.example.services.mongodb.MongoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,7 +44,11 @@ public class MongoServiceImpl implements MongoService {
         if (StringUtils.isEmpty(firstName) || StringUtils.isEmpty(lastName)){
             return false;
         }
-        Customer customer = new Customer(firstName,lastName);
+
+        Long ctime = LocalDateTime.now().toEpochSecond(ZoneOffset.of("+8"));
+        Long utime = LocalDateTime.now().toEpochSecond(ZoneOffset.of("+8"));
+
+        Customer customer = new Customer(firstName,lastName,ctime,utime);
         Customer result = customerMongoRepository.save(customer);
         if (null == result){
             return false;
@@ -134,9 +143,31 @@ public class MongoServiceImpl implements MongoService {
             return Collections.EMPTY_LIST;
         }
 
-        PageRequest pageRequest = new PageRequest(pageNum,pageSize);
+        Pageable pageable = new PageRequest(pageNum,pageSize);
 
-        Page<Customer> customerPage = customerPageAndSortRepository.findAll(pageRequest);
+        Page<Customer> customerPage = customerPageAndSortRepository.findAll(pageable);
+        if (null == customerPage){
+            return Collections.EMPTY_LIST;
+        }
+        return customerPage.getContent();
+    }
+
+    /**
+     * 分页查询
+     * 根据指定的条件排序
+     * @param pageNum
+     * @param pageSize
+     * @param sort
+     * @return
+     */
+    @Override
+    public List<Customer> listCustomer(Integer pageNum, Integer pageSize, Sort sort) {
+        if (null == pageNum || null == pageSize || null == sort){
+            return Collections.EMPTY_LIST;
+        }
+        Pageable pageable = new PageRequest(pageNum,pageSize,sort);
+        Page<Customer> customerPage = customerPageAndSortRepository.findAll(pageable);
+
         if (null == customerPage){
             return Collections.EMPTY_LIST;
         }

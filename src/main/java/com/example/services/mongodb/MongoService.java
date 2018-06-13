@@ -1,6 +1,7 @@
 package com.example.services.mongodb;
 
 import com.example.entities.mongodb.Customer;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -53,4 +54,14 @@ public interface MongoService {
      * @return
      */
     List<Customer> listCustomer(Integer pageNum, Integer pageSize);
+
+    /**
+     * 分页查询
+     * 根据指定的条件排序
+     * @param pageNum
+     * @param pageSize
+     * @param sort
+     * @return
+     */
+    List<Customer> listCustomer(Integer pageNum, Integer pageSize, Sort sort);
 }

@@ -3,6 +3,7 @@ package com.example.controllers.api;
 import com.example.entities.mongodb.Customer;
 import com.example.services.mongodb.MongoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -97,6 +98,23 @@ public class MongoController {
     public List<Customer> listCustomerByPage(Integer pageNum, Integer pageSize){
 
         List<Customer> result = mongoService.listCustomer(pageNum,pageSize);
+
+        return result;
+    }
+
+    /**
+     * 倒叙分页排序
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping("listCustomerByTime")
+    public List<Customer> listCustomerByTime(Integer pageNum, Integer pageSize){
+
+        //倒叙排
+        Sort sort = new Sort(Sort.Direction.DESC,"ctime");
+
+        List<Customer> result = mongoService.listCustomer(pageNum,pageSize,sort);
 
         return result;
     }
