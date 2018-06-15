@@ -7,18 +7,20 @@ import java.util.List;
 
 /**
  * @author:wangdong
- * @description:
+ * @description:mongoDB的删除操作
  */
 public interface MongoService {
 
     /**
      * 保存客户信息
      *
-     * @param firstName
+     *
+     * @param id
      * @param lastName
+     * @param firstName
      * @return
      */
-    Boolean saveCustomer(String firstName, String lastName);
+    Boolean saveCustomer(String id, String lastName, String firstName);
 
     /**
      * 根据第一个名字查询
@@ -64,4 +66,38 @@ public interface MongoService {
      * @return
      */
     List<Customer> listCustomer(Integer pageNum, Integer pageSize, Sort sort);
+
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
+    Boolean deleteCustomer(String id);
+
+    /**
+     * 删除
+     * @param customer
+     * @return
+     */
+    Boolean deleteCustomer(Customer customer);
+
+    /**
+     * 根据ids查询
+     * @param ids
+     * @return
+     */
+    List<Customer> listCustomers(List<String> ids);
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    Boolean deleteCustomer(List<String> ids);
+
+    /**
+     * 有一下满足条件的有多少条
+     * @param firstName
+     * @return
+     */
+    Long countCustomerByFirstName(String firstName);
 }
